@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Personal Message</title>
+<title>A Personal Message for Naysha</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,8 +11,7 @@
   :root {
     --bg-dark: #14101a;
     --bg-mid: #231a28;
-    --accent-gold: #d9a8c8;
-    --accent-light: #d4c5b0;
+    --accent-pink: #d9a8c8;
     --text-primary: #f5f3f0;
     --text-secondary: #c9c0b5;
     --border-subtle: rgba(217,168,200,0.15);
@@ -104,7 +103,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     margin-bottom: 1rem;
     display: block;
     font-weight: 500;
@@ -124,14 +123,14 @@
     outline: none;
     transition: border-color 0.3s, background 0.3s;
   }
-  .password-input::placeholder { color: rgba(255,255,255,0.15); letter-spacing: 0.15em; }
-  .password-input:focus { border-color: var(--accent-gold); background: rgba(255,255,255,0.05); }
+  .password-input::placeholder { color: rgba(255,255,255,0.15); }
+  .password-input:focus { border-color: var(--accent-pink); background: rgba(255,255,255,0.05); }
 
   .unlock-btn {
     margin-top: 1.5rem;
     width: 100%;
     padding: 1rem;
-    background: var(--accent-gold);
+    background: var(--accent-pink);
     border: none;
     border-radius: 6px;
     color: var(--bg-dark);
@@ -152,7 +151,7 @@
     letter-spacing: 0.05em;
     min-height: 1.2em;
   }
-  .hint { margin-top: 1.5rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); letter-spacing: 0.1em; }
+  .hint { margin-top: 1.5rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); }
 
   #welcome-screen { background: linear-gradient(135deg, #231a28 0%, #14101a 100%); }
   .welcome-emoji { font-size: 3rem; margin-bottom: 1.5rem; }
@@ -164,7 +163,6 @@
     color: var(--text-primary);
     line-height: 1.1;
     margin-bottom: 1rem;
-    letter-spacing: 0.02em;
   }
   .welcome-sub {
     font-family: 'Inter', sans-serif;
@@ -177,9 +175,9 @@
   .continue-btn {
     padding: 1rem 2.5rem;
     background: transparent;
-    border: 1.5px solid var(--accent-gold);
+    border: 1.5px solid var(--accent-pink);
     border-radius: 6px;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
     letter-spacing: 0.25em;
@@ -188,7 +186,7 @@
     cursor: pointer;
     transition: all 0.3s;
   }
-  .continue-btn:hover { background: var(--accent-gold); color: var(--bg-dark); }
+  .continue-btn:hover { background: var(--accent-pink); color: var(--bg-dark); }
 
   #main-screen {
     position: relative;
@@ -207,7 +205,7 @@
     font-size: 0.68rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     margin-bottom: 1.2rem;
     opacity: 0.85;
     font-weight: 500;
@@ -221,7 +219,6 @@
     text-align: center;
     margin-bottom: 3.5rem;
     line-height: 1.3;
-    letter-spacing: 0.01em;
   }
 
   .reasons-grid {
@@ -240,21 +237,20 @@
     display: flex;
     gap: 1.2rem;
     align-items: flex-start;
-    transition: background 0.3s, border-color 0.3s;
+    transition: all 0.3s;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
   }
-  .reason-card:hover { background: rgba(217,168,200,0.05); border-color: var(--accent-gold); }
+  .reason-card:hover { background: rgba(217,168,200,0.05); border-color: var(--accent-pink); }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
   .reason-num {
     font-family: 'Prata', serif;
     font-size: 1.6rem;
     font-weight: 400;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     opacity: 0.6;
     min-width: 40px;
-    line-height: 1.2;
   }
 
   .reason-text {
@@ -268,7 +264,7 @@
   .divider {
     width: 60px;
     height: 1px;
-    background: var(--accent-gold);
+    background: var(--accent-pink);
     margin: 1.5rem auto 4rem;
     opacity: 0.4;
   }
@@ -284,7 +280,7 @@
     left: 50%;
     top: 0; bottom: 0;
     width: 1px;
-    background: var(--accent-gold);
+    background: var(--accent-pink);
     opacity: 0.25;
     transform: translateX(-50%);
   }
@@ -306,7 +302,7 @@
     transform: translateX(-50%);
     width: 12px; height: 12px;
     border-radius: 50%;
-    background: var(--accent-gold);
+    background: var(--accent-pink);
     border: 2px solid var(--bg-dark);
     margin-top: 4px;
     box-shadow: 0 0 16px rgba(217,168,200,0.3);
@@ -318,7 +314,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     opacity: 0.75;
     margin-bottom: 0.4rem;
     font-weight: 500;
@@ -360,15 +356,114 @@
     position: relative;
     overflow: hidden;
   }
-  .photo-slot:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .photo-slot:hover { border-color: var(--accent-pink); color: var(--accent-pink); }
   .photo-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
-  .photo-slot .add-icon { font-size: 1.3rem; }
   .photo-input { display: none; }
 
   .letter-section {
     width: min(100%, 680px);
     margin-bottom: 5rem;
   }
+
+  .envelope-container {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+  }
+
+  .envelope {
+    width: 320px;
+    height: 200px;
+    position: relative;
+    transition: all 0.6s ease;
+  }
+
+  .envelope-container:hover .envelope {
+    transform: scale(1.05);
+  }
+
+  .envelope-body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f3f0 0%, #e8e4de 100%);
+    border: 2px solid var(--accent-pink);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(217,168,200,0.3);
+  }
+
+  .envelope-top {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 100px solid #ebe6df;
+    top: 0;
+    transition: all 0.6s ease;
+    z-index: 10;
+  }
+
+  .envelope-container.opened .envelope-top {
+    transform: rotateX(180deg);
+    opacity: 0;
+  }
+
+  .envelope-flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    opacity: 1;
+    transition: opacity 0.6s ease 0.3s;
+  }
+
+  .envelope-container.opened .envelope-flap {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .envelope-text {
+    font-size: 3rem;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  .envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .envelope-label {
+    font-family: 'Prata', serif;
+    font-size: 1rem;
+    color: var(--accent-pink);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
   .letter-card {
     background: rgba(217,168,200,0.03);
     border: 1px solid var(--border-subtle);
@@ -376,16 +471,28 @@
     padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
+    animation: slideUp 0.8s ease;
   }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .letter-card::before {
     content: '"';
     position: absolute;
     top: 0.5rem; left: 1.2rem;
     font-size: 3rem;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     opacity: 0.1;
     font-family: serif;
-    line-height: 1;
   }
   .letter-text {
     font-family: 'Inter', sans-serif;
@@ -400,11 +507,240 @@
     font-family: 'Prata', serif;
     font-size: 1.6rem;
     font-weight: 400;
-    color: var(--accent-gold);
+    color: var(--accent-pink);
     text-align: right;
   }
 
-  /* PLAYLIST SECTION */
+  /* GAMES SECTION */
+  .games-section {
+    width: min(100%, 920px);
+    margin-bottom: 5rem;
+    text-align: center;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .game-card {
+    background: rgba(217,168,200,0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+  .game-card:hover {
+    background: rgba(217,168,200,0.08);
+    border-color: var(--accent-pink);
+    transform: translateY(-3px);
+  }
+
+  .game-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-title {
+    font-family: 'Prata', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .game-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .play-btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .play-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  /* GAME MODAL */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  .modal.active { display: flex; }
+
+  .modal-content {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 3rem;
+    width: min(100%, 600px);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+  .close-modal:hover { color: var(--accent-pink); }
+
+  .modal-title {
+    font-family: 'Prata', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .quiz-question {
+    margin-bottom: 2rem;
+  }
+
+  .quiz-question p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .quiz-option {
+    padding: 0.8rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .quiz-option:hover { border-color: var(--accent-pink); background: rgba(217,168,200,0.05); }
+  .quiz-option.selected {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+    color: var(--bg-dark);
+  }
+  .quiz-option.correct {
+    background: #4CAF50;
+    border-color: #4CAF50;
+    color: white;
+  }
+  .quiz-option.wrong {
+    background: #f44336;
+    border-color: #f44336;
+    color: white;
+  }
+
+  .score-display {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(217,168,200,0.1);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .score-number {
+    font-family: 'Prata', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: var(--accent-pink);
+    margin-bottom: 0.5rem;
+  }
+
+  .score-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .memory-card {
+    aspect-ratio: 1;
+    background: rgba(217,168,200,0.1);
+    border: 2px solid var(--border-subtle);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: all 0.3s;
+    user-select: none;
+  }
+  .memory-card:hover { border-color: var(--accent-pink); }
+  .memory-card.flipped {
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+  }
+  .memory-card.matched {
+    opacity: 0.5;
+  }
+
+  .game-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .btn-next, .btn-submit {
+    padding: 0.8rem 2rem;
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-next:hover, .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+
   .playlist-section {
     width: min(100%, 680px);
     margin-bottom: 5rem;
@@ -422,7 +758,7 @@
 
   .playlist-btn {
     padding: 1.2rem 2.8rem;
-    background: var(--accent-gold);
+    background: var(--accent-pink);
     border: none;
     border-radius: 6px;
     color: var(--bg-dark);
@@ -440,9 +776,6 @@
     box-shadow: 0 12px 30px rgba(217,168,200,0.35);
     opacity: 0.95;
   }
-  .playlist-btn:active {
-    transform: translateY(-1px);
-  }
 
   .footer {
     font-size: 0.65rem;
@@ -450,21 +783,12 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-top: 1.5rem;
-    font-weight: 300;
   }
 
   @media (max-width: 600px) {
     #main-screen { padding: 3rem 1.5rem 4rem; }
-    .timeline::before { left: 16px; }
-    .timeline-item:nth-child(odd),
-    .timeline-item:nth-child(even) {
-      flex-direction: row;
-      padding-right: 0;
-      padding-left: 2.5rem;
-    }
-    .tl-dot { left: 16px; }
-    .photos-placeholder { grid-template-columns: repeat(2, 1fr); }
-    .reason-card { padding: 1.5rem; gap: 0.8rem; }
+    .memory-grid { grid-template-columns: repeat(3, 1fr); }
+    .modal-content { padding: 1.5rem; }
   }
 </style>
 </head>
@@ -518,7 +842,22 @@
   <div class="letter-section">
     <p class="section-label">A Message</p>
     <h2 class="section-title">For You</h2>
-    <div class="letter-card">
+    
+    <div class="envelope-container" id="envelopeContainer" onclick="openEnvelope()">
+      <div class="envelope">
+        <div class="envelope-top"></div>
+        <div class="envelope-body">
+          <div class="envelope-flap">
+            <span class="envelope-text">💌</span>
+          </div>
+          <div class="envelope-front">
+            <p class="envelope-label">Open me</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="letter-card" id="letterCard" style="display: none;">
       <p class="letter-text" id="letter-text">
         My dearest Naysha Heika Ghani,<br><br>
         On your birthday, I want you to know that you are so much more than I could have ever hoped for. You're the reason my heart smiles, the reason my bad days become good, and the reason I believe in forever.<br><br>
@@ -533,6 +872,30 @@
 
   <div class="divider"></div>
 
+  <!-- GAMES SECTION -->
+  <div class="games-section">
+    <p class="section-label">Have Some Fun</p>
+    <h2 class="section-title">Love Games & Quizzes</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem;">Test how well you know me, see our compatibility score, and play fun games! 🎮</p>
+    <div class="games-grid">
+      <div class="game-card" style="animation-delay: 0s">
+        <div class="game-icon">🎵</div>
+        <div class="game-title">Guess the Song</div>
+        <div class="game-description">Can you identify the love songs from my playlist?</div>
+        <button class="play-btn" onclick="startQuiz('guessOurSongs')">Play Now</button>
+      </div>
+
+      <div class="game-card" style="animation-delay: 0.1s">
+        <div class="game-icon">💎</div>
+        <div class="game-title">Memory Match Game</div>
+        <div class="game-description">Match the heart pairs and win! A fun romantic game</div>
+        <button class="play-btn" onclick="startQuiz('memoryGame')">Play Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
   <!-- PLAYLIST SECTION -->
   <div class="playlist-section">
     <p class="section-label">A Special Gift</p>
@@ -542,6 +905,14 @@
   </div>
 
   <p class="footer">Made with love</p>
+</div>
+
+<!-- GAME MODALS -->
+<div class="modal" id="gameModal">
+  <div class="modal-content">
+    <button class="close-modal" onclick="closeModal()">✕</button>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
 <script>
@@ -603,6 +974,19 @@ function openPlaylist() {
   window.location.href = 'love-playlist.html';
 }
 
+function openEnvelope() {
+  const container = document.getElementById('envelopeContainer');
+  const letterCard = document.getElementById('letterCard');
+  
+  if (!container.classList.contains('opened')) {
+    container.classList.add('opened');
+    letterCard.style.display = 'block';
+    
+    // Remove click listener after opening
+    container.style.pointerEvents = 'none';
+  }
+}
+
 const reasons = [
   "The way your eyes light up when you're passionate about something",
   "How you make every moment feel like it matters",
@@ -658,6 +1042,148 @@ function buildContent() {
     });
     photoGrid.appendChild(slot);
   }
+}
+
+// GAMES
+let gameState = {
+  currentQuestion: 0,
+  score: 0,
+  answers: [],
+  gameType: ''
+};
+
+const quizzes = {
+  guessOurSongs: [
+    { q: "Which song is by Taylor Swift about loving someone?", options: ["Lover", "Ivy", "Perfect", "At Last"], correct: 0 },
+    { q: "Which artist sings 'Pink + White'?", options: ["Ed Sheeran", "Frank Ocean", "John Legend", "Harry Styles"], correct: 1 },
+    { q: "Which song is about enchantment?", options: ["Enchanted", "Thinking Out Loud", "All of Me", "Your Song"], correct: 0 },
+    { q: "Who sings 'At Last'?", options: ["Etta James", "Adele", "Taylor Swift", "Ed Sheeran"], correct: 0 },
+    { q: "Which is a Frank Ocean song?", options: ["Lover", "Thinkin Bout You", "Perfect", "Thinking Out Loud"], correct: 1 },
+  ]
+};
+
+function startQuiz(type) {
+  gameState = { currentQuestion: 0, score: 0, answers: [], gameType: type };
+  
+  if (type === 'guessOurSongs') {
+    showQuizQuestion();
+  } else if (type === 'memoryGame') {
+    showMemoryGame();
+  }
+}
+
+function showQuizQuestion() {
+  const modal = document.getElementById('gameModal');
+  const body = document.getElementById('modalBody');
+  const quiz = quizzes[gameState.gameType];
+  const q = quiz[gameState.currentQuestion];
+  
+  body.innerHTML = `
+    <div class="modal-title">Question ${gameState.currentQuestion + 1} / ${quiz.length}</div>
+    <div class="quiz-question">
+      <p>${q.q}</p>
+      <div class="quiz-options">
+        ${q.options.map((opt, i) => `
+          <button class="quiz-option" onclick="selectAnswer(${i})">${opt}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  
+  modal.classList.add('active');
+}
+
+function selectAnswer(index) {
+  const quiz = quizzes[gameState.gameType];
+  const correct = quiz[gameState.currentQuestion].correct === index;
+  if (correct) gameState.score++;
+  
+  gameState.currentQuestion++;
+  
+  if (gameState.currentQuestion < quiz.length) {
+    showQuizQuestion();
+  } else {
+    showQuizResult();
+  }
+}
+
+function showQuizResult() {
+  const quiz = quizzes[gameState.gameType];
+  const body = document.getElementById('modalBody');
+  const title = gameState.gameType === 'knowMe' ? "How Well Do You Know Me?" : "Song Knowledge";
+  
+  body.innerHTML = `
+    <div class="modal-title">${title}</div>
+    <div class="score-display">
+      <div class="score-number">${gameState.score}/${quiz.length}</div>
+      <div class="score-text">${gameState.score === quiz.length ? "Perfect! You know me so well! 💕" : gameState.score >= 3 ? "Great job! You know me pretty well 💗" : "Keep learning more about me 💜"}</div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <button class="btn-submit" onclick="closeModal()">Back</button>
+    </div>
+  `;
+}
+
+function showMemoryGame() {
+  const body = document.getElementById('modalBody');
+  const modal = document.getElementById('gameModal');
+  
+  const pairs = ['💕', '💕', '💗', '💗', '💖', '💖', '💝', '💝'];
+  const shuffled = pairs.sort(() => Math.random() - 0.5);
+  
+  body.innerHTML = `
+    <div class="modal-title">Memory Match Game</div>
+    <div class="memory-grid" id="memoryGrid">
+      ${shuffled.map((emoji, i) => `
+        <div class="memory-card" onclick="flipCard(${i})" data-emoji="${emoji}" data-index="${i}"></div>
+      `).join('')}
+    </div>
+    <div style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">
+      <p>Match all the hearts to win! 🎮</p>
+      <button class="btn-submit" onclick="closeModal()" style="margin-top: 1rem;">Back</button>
+    </div>
+  `;
+  
+  modal.classList.add('active');
+}
+
+let flipped = [];
+function flipCard(index) {
+  const cards = document.querySelectorAll('.memory-card');
+  const card = cards[index];
+  
+  if (flipped.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
+    card.classList.add('flipped');
+    card.textContent = card.getAttribute('data-emoji');
+    flipped.push(index);
+    
+    if (flipped.length === 2) {
+      const emoji1 = cards[flipped[0]].getAttribute('data-emoji');
+      const emoji2 = cards[flipped[1]].getAttribute('data-emoji');
+      
+      if (emoji1 === emoji2) {
+        cards[flipped[0]].classList.add('matched');
+        cards[flipped[1]].classList.add('matched');
+        flipped = [];
+        
+        if (document.querySelectorAll('.memory-card.matched').length === 8) {
+          setTimeout(() => alert('You won! 💕'), 300);
+        }
+      } else {
+        setTimeout(() => {
+          cards[flipped[0]].classList.remove('flipped');
+          cards[flipped[1]].classList.remove('flipped');
+          cards[flipped[0]].textContent = '';
+          cards[flipped[1]].textContent = '';
+          flipped = [];
+        }, 1000);
+      }
+    }
+  }
+}
+
+function closeModal() {
+  document.getElementById('gameModal').classList.remove('active');
 }
 </script>
 </body>
