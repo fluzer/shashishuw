@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Playlist For You - Naysha</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #14101a;
+    --bg-mid: #231a28;
+    --accent-pink: #d9a8c8;
+    --text-primary: #f5f3f0;
+    --text-secondary: #c9c0b5;
+    --border-subtle: rgba(217,168,200,0.15);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .heart {
+    position: absolute;
+    font-size: 1.8rem;
+    opacity: 0;
+    animation: heartFall var(--duration, 6s) linear forwards;
+    animation-delay: var(--delay, 0s);
+    filter: drop-shadow(0 0 8px rgba(217,168,200,0.4));
+  }
+  @keyframes heartFall {
+    0% { transform: translateY(-100px) rotate(0deg) translateX(0); opacity: 0.7; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(100vh) rotate(360deg) translateX(20px); opacity: 0; }
+  }
+
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--d, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: var(--op, 0.25);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.25); }
+    50% { opacity: calc(var(--op, 0.25) * 0.4); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .header-title {
+    font-family: 'Prata', serif;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .header-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .intro-text {
+    background: rgba(217,168,200,0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .intro-text p {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 1.2rem;
+  }
+
+  .intro-text p:last-child { margin-bottom: 0; }
+
+  .playlist-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .playlist-icon {
+    font-size: 2.5rem;
+  }
+
+  .playlist-info h2 {
+    font-family: 'Prata', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+  }
+
+  .playlist-info p {
+    font-size: 0.9rem;
+    color: var(--accent-pink);
+    letter-spacing: 0.1em;
+  }
+
+  .songs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .song-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .song-card:hover {
+    background: rgba(217,168,200,0.05);
+    border-color: var(--accent-pink);
+    transform: translateY(-2px);
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .song-number {
+    display: inline-block;
+    font-family: 'Prata', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--accent-pink);
+    opacity: 0.6;
+    margin-bottom: 0.8rem;
+  }
+
+  .song-title {
+    font-family: 'Prata', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+  }
+
+  .song-artist {
+    font-size: 0.9rem;
+    color: var(--accent-pink);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .song-meaning {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .spotify-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: #1DB954;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: opacity 0.3s;
+  }
+  .spotify-link:hover { opacity: 0.8; }
+
+  .closing {
+    margin-top: 5rem;
+    padding: 3rem;
+    background: rgba(217,168,200,0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .closing h3 {
+    font-family: 'Prata', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .closing p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .closing-sig {
+    font-family: 'Prata', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--accent-pink);
+    margin-top: 2rem;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    background: transparent;
+    border: 1.5px solid var(--accent-pink);
+    border-radius: 6px;
+    color: var(--accent-pink);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .back-btn:hover {
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 2rem 1.5rem; }
+    .intro-text { padding: 1.5rem; }
+    .song-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts-container" id="hearts-container"></div>
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <div class="header">
+    <h1 class="header-title">A Playlist For You</h1>
+    <p class="header-sub">Music for the woman I love</p>
+  </div>
+
+  <div class="intro-text">
+    <p>Dear Naysha Heika Ghani,</p>
+    <p>I curated this playlist with every song thinking of you and how deeply I love you. Each track carries a piece of my heart and the feelings I have for you. These songs are my love language — listen to them and know that you're always on my mind.</p>
+  </div>
+
+  <div class="playlist-header">
+    <div class="playlist-icon">♫</div>
+    <div class="playlist-info">
+      <h2>Love Songs For Naysha</h2>
+      <p>26 songs · A declaration of love</p>
+    </div>
+  </div>
+
+  <div class="songs-container" id="songs-container"></div>
+
+  <div class="closing">
+    <h3>Why This Playlist</h3>
+    <p>Every song here is about loving you, thinking of you, being with you, and the depth of feeling that comes with having you in my life. Whether it's the joy of new love, the comfort of being home, or the promise of forever — it's all here, all for you, Naysha.</p>
+    <p style="margin-top: 2rem; font-size: 1.2rem; font-style: italic;">You are my favorite song. 🎵</p>
+    <p class="closing-sig">With all my love</p>
+    <button class="back-btn" onclick="goBack()">← Back to Birthday Gift</button>
+  </div>
+
+</div>
+
+<script>
+const songs = [
+  {
+    number: 1,
+    title: "Lover",
+    artist: "Taylor Swift",
+    meaning: "The way you describe a love so pure and permanent — that's exactly what I feel for you. You're my lover, my best friend, my forever."
+  },
+  {
+    number: 2,
+    title: "Enchanted",
+    artist: "Taylor Swift",
+    meaning: "The first moment I saw you, I was enchanted. You had me from the start, and I knew my life would never be the same."
+  },
+  {
+    number: 3,
+    title: "Invisible String",
+    artist: "Taylor Swift",
+    meaning: "I believe we were meant to find each other. Like an invisible string tied our hearts together long before we even met, Naysha."
+  },
+  {
+    number: 4,
+    title: "All Too Well",
+    artist: "Taylor Swift",
+    meaning: "When we're together, every moment becomes unforgettable. Every laugh, every touch, everything about you I hold dear forever."
+  },
+  {
+    number: 5,
+    title: "Pink + White",
+    artist: "Frank Ocean",
+    meaning: "This song reminds me of you — beautiful, precious, and something I want to cherish and protect forever. You're my pink + white moment."
+  },
+  {
+    number: 6,
+    title: "Thinkin Bout You",
+    artist: "Frank Ocean",
+    meaning: "I'm constantly thinking about you. Your smile, your voice, the way you make me feel. You occupy my every thought, always."
+  },
+  {
+    number: 7,
+    title: "Ivy",
+    artist: "Frank Ocean",
+    meaning: "Like ivy that grows and grows, my love for you keeps deepening. You're intertwined with my heart completely."
+  },
+  {
+    number: 8,
+    title: "Perfect",
+    artist: "Ed Sheeran",
+    meaning: "You're not perfect, but you're perfect for me. Everything about you — your flaws, your dreams, your heart — is exactly what I need."
+  },
+  {
+    number: 9,
+    title: "All of Me",
+    artist: "John Legend",
+    meaning: "I give you all of me, Naysha. My heart, my soul, my dreams, my forever. You deserve someone who loves you completely, and I do."
+  },
+  {
+    number: 10,
+    title: "Kiss Me",
+    artist: "Sixpence None the Richer",
+    meaning: "There's a sweetness and innocence in loving you that reminds me of this song. I want every moment with you to feel magical."
+  },
+  {
+    number: 11,
+    title: "Thinking Out Loud",
+    artist: "Ed Sheeran",
+    meaning: "I want to grow old loving you. When we're gray and old, I'll still look at you the same way I look at you now — with complete adoration."
+  },
+  {
+    number: 12,
+    title: "At Last",
+    artist: "Etta James",
+    meaning: "Meeting you felt like finally finding what I've been searching for all my life. You're my 'at last' moment, Naysha."
+  },
+  {
+    number: 13,
+    title: "Paper Rings",
+    artist: "Taylor Swift",
+    meaning: "I'd burn it all down just to be with you. You're worth everything to me — I'd choose you in every lifetime, every version of reality."
+  },
+  {
+    number: 14,
+    title: "Best Part",
+    artist: "Daniel Caesar ft. H.E.R.",
+    meaning: "You're the best part of my days. Coming home to you, seeing your face — that's what makes everything worth it."
+  },
+  {
+    number: 15,
+    title: "Adore You",
+    artist: "Harry Styles",
+    meaning: "I adore everything about you, Naysha. The way you move, the way you think, the way your heart works — I'm completely yours."
+  },
+  {
+    number: 16,
+    title: "Make You Feel My Love",
+    artist: "Adele",
+    meaning: "My mission in life is to make you feel how deeply, truly, and completely I love you every single day."
+  },
+  {
+    number: 17,
+    title: "Faithfully",
+    artist: "Journey",
+    meaning: "Through it all, I am faithful to you. You have my unwavering love and commitment for life."
+  },
+  {
+    number: 18,
+    title: "I Will Follow You Into The Dark",
+    artist: "Death Cab for Cutie",
+    meaning: "I would follow you anywhere. That's the depth of my love — I'm completely devoted to you, Naysha."
+  },
+  {
+    number: 19,
+    title: "The Night We Met",
+    artist: "Lord Huron",
+    meaning: "That night we met changed my entire life. I replay that moment because it was the beginning of the best story I could ever tell."
+  },
+  {
+    number: 20,
+    title: "Your Song",
+    artist: "Elton John",
+    meaning: "You inspire every good thing in me. You're my muse, my inspiration, and my reason to be better."
+  },
+  {
+    number: 21,
+    title: "Falling",
+    artist: "Harry Styles",
+    meaning: "I'm completely falling for you every day. There's no parachute, no safety net — just me, falling deeper in love with you."
+  },
+  {
+    number: 22,
+    title: "Someone You Loved",
+    artist: "Lewis Capaldi",
+    meaning: "I never want you to feel alone. I'm here for you always, through everything, as someone who loves you unconditionally."
+  },
+  {
+    number: 23,
+    title: "Dreams",
+    artist: "Fleetwood Mac",
+    meaning: "You're my sweet dream come true. Living this life with you feels like I'm dreaming the most beautiful dream."
+  },
+  {
+    number: 24,
+    title: "Golden",
+    artist: "Harry Styles",
+    meaning: "Every moment with you feels golden. You make the ordinary magical and the world brighter just by being in it."
+  },
+  {
+    number: 25,
+    title: "Love Me Like You Do",
+    artist: "Ellie Goulding",
+    meaning: "The way you love me makes me feel complete. Please keep loving me exactly the way you do — it's everything I need."
+  },
+  {
+    number: 26,
+    title: "Forever Young",
+    artist: "Alphaville",
+    meaning: "I want to love you and grow old with you forever. Let's stay young at heart and in love, always."
+  }
+];
+
+const container = document.getElementById('songs-container');
+songs.forEach((song, index) => {
+  const card = document.createElement('div');
+  card.className = 'song-card';
+  card.style.animationDelay = `${index * 0.05}s`;
+  card.innerHTML = `
+    <div class="song-number">#${song.number}</div>
+    <div class="song-title">${song.title}</div>
+    <div class="song-artist">${song.artist}</div>
+    <div class="song-meaning">"${song.meaning}"</div>
+    <a href="https://open.spotify.com/search/${encodeURIComponent(song.title + ' ' + song.artist)}" target="_blank" class="spotify-link">Listen on Spotify →</a>
+  `;
+  container.appendChild(card);
+});
+
+// Hearts
+const heartsContainer = document.getElementById('hearts-container');
+function createHearts() {
+  for(let i = 0; i < 25; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '♡';
+    const duration = Math.random() * 4 + 5;
+    const delay = Math.random() * 5;
+    const left = Math.random() * 100;
+    heart.style.cssText = `left:${left}%;--duration:${duration}s;--delay:${delay}s;`;
+    heartsContainer.appendChild(heart);
+  }
+  setTimeout(createHearts, 8000);
+}
+createHearts();
+
+// Stars
+const starsEl = document.getElementById('stars');
+for(let i = 0; i < 100; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2 + 0.5;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+3).toFixed(1)}s;--delay:${(Math.random()*5).toFixed(1)}s;--op:${(Math.random()*0.3+0.1).toFixed(2)};`;
+  starsEl.appendChild(s);
+}
+
+function goBack() {
+  window.history.back();
+}
+</script>
+</body>
+</html>
