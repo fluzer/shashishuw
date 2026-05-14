@@ -502,6 +502,7 @@
     color: var(--text-primary);
     line-height: 1.85;
     text-align: center;
+    white-space: pre-line;
   }
   .letter-sig {
     margin-top: 2.2rem;
@@ -859,14 +860,7 @@
     </div>
 
     <div class="letter-card" id="letterCard" style="display: none;">
-      <p class="letter-text" id="letter-text">
-        My dearest Naysha Heika Ghani,<br><br>
-        On your birthday, I want you to know that you are so much more than I could have ever hoped for. You're the reason my heart smiles, the reason my bad days become good, and the reason I believe in forever.<br><br>
-        Every moment with you feels like a beautiful dream. The way you laugh, the way you care, the way you light up the world around you — it all makes me fall in love with you over and over again. You have this incredible gift of making everything feel like it matters, like it's part of something magical.<br><br>
-        Thank you for being my greatest adventure, my safest place, and my home. Thank you for loving me even on days when I'm not my best. Thank you for being exactly who you are — perfectly imperfect, wonderfully you.<br><br>
-        Naysha, you deserve all the happiness in the world and more. I promise to spend every day making sure you feel loved, cherished, and appreciated for the incredible woman you are.<br><br>
-        Happy Birthday to the love of my life. You make everything worth it.
-      </p>
+      <p class="letter-text" id="letter-text"></p>
       <p class="letter-sig">All my love, always</p>
     </div>
   </div>
@@ -975,15 +969,45 @@ function openPlaylist() {
   window.location.href = 'love-playlist.html';
 }
 
+function typeLetter() {
+  const letterEl = document.getElementById('letter-text');
+
+  if (letterIndex < letterContent.length) {
+    letterEl.textContent += letterContent.charAt(letterIndex);
+    letterIndex++;
+
+    setTimeout(typeLetter, 25);
+  }
+}
+const letterContent = `
+  My dearest Naysha Heika Ghani,
+
+  On your birthday, I want you to know that you are so much more than I could have ever hoped for. You're the reason my heart smiles, the reason my bad days become good, and the reason I believe in forever.
+  
+  Every moment with you feels like a beautiful dream. The way you laugh, the way you care, the way you light up the world around you — it all makes me fall in love with you over and over again. You have this incredible gift of making everything feel like it matters, like it's part of something magical.
+
+  Thank you for being my greatest adventure, my safest place, and my home. Thank you for loving me even on days when I'm not my best. Thank you for being exactly who you are — perfectly imperfect, wonderfully you.
+
+  Naysha, you deserve all the happiness in the world and more. I promise to spend every day making sure you feel loved, cherished, and appreciated for the incredible woman you are.
+
+  Happy Birthday to the love of my life. You make everything worth it.`;
+let letterIndex = 0;
+
 function openEnvelope() {
   const container = document.getElementById('envelopeContainer');
   const letterCard = document.getElementById('letterCard');
-  
+
   if (!container.classList.contains('opened')) {
     container.classList.add('opened');
     letterCard.style.display = 'block';
-    
-    // Remove click listener after opening
+
+    letterIndex = 0;
+    document.getElementById('letter-text').innerHTML = '';
+
+    setTimeout(() => {
+      typeLetter();
+    }, 500);
+
     container.style.pointerEvents = 'none';
   }
 }
