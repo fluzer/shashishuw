@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories Gallery - Letters & Photos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #14101a;
+    --bg-mid: #231a28;
+    --accent-pink: #d9a8c8;
+    --text-primary: #f5f3f0;
+    --text-secondary: #c9c0b5;
+    --border-subtle: rgba(217,168,200,0.15);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--d, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: var(--op, 0.25);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.25); }
+    50% { opacity: calc(var(--op, 0.25) * 0.4); }
+  }
+
+  .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+  .heart {
+    position: absolute;
+    font-size: 1.8rem;
+    opacity: 0;
+    animation: heartFall var(--duration, 6s) linear forwards;
+    animation-delay: var(--delay, 0s);
+    filter: drop-shadow(0 0 8px rgba(217,168,200,0.4));
+  }
+  @keyframes heartFall {
+    0% { transform: translateY(-100px) rotate(0deg) translateX(0); opacity: 0.7; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(100vh) rotate(360deg) translateX(20px); opacity: 0; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .header-title {
+    font-family: 'Prata', serif;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  
+  .upload-section {
+    background: rgba(217,168,200,0.03);
+    border: 2px dashed var(--accent-pink);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .upload-section:hover {
+    background: rgba(217,168,200,0.08);
+    border-color: var(--accent-pink);
+  }
+
+  .upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .upload-text h3 {
+    font-family: 'Prata', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-text p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  #photoInput {
+    display: none;
+  }
+
+  .btn-upload {
+    padding: 0.8rem 2rem;
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-upload:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(217,168,200,0.25);
+  }
+
+  /* GALLERY GRID */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .photo-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    aspect-ratio: 1;
+    background: rgba(217,168,200,0.1);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .photo-card:hover::after {
+    opacity: 1;
+  }
+
+  .photo-card::after {
+    content: '📖 View & Add Story';
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 16, 26, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-pink);
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .photo-placeholder {
+    font-size: 3rem;
+    opacity: 0.5;
+  }
+
+  
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 2rem;
+  }
+
+  .modal.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    width: min(100%, 900px);
+    height: min(100%, 80vh);
+    max-height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10;
+  }
+
+  .close-btn:hover {
+    color: var(--accent-pink);
+  }
+
+  .modal-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .modal-letter {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modal-header {
+    font-family: 'Prata', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+  }
+
+  .letter-textarea {
+    flex: 1;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    resize: none;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .letter-textarea::placeholder {
+    color: rgba(255,255,255,0.25);
+  }
+
+  .letter-textarea:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+    background: rgba(217,168,200,0.05);
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .btn-save, .btn-delete, .btn-close {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .btn-save {
+    background: var(--accent-pink);
+    color: var(--bg-dark);
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(217,168,200,0.25);
+  }
+
+  .btn-delete {
+    background: #f44336;
+    color: white;
+  }
+
+  .btn-delete:hover {
+    opacity: 0.9;
+  }
+
+  .btn-close {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .btn-close:hover {
+    border-color: var(--accent-pink);
+    color: var(--accent-pink);
+  }
+
+  .save-status {
+    font-size: 0.8rem;
+    color: #4CAF50;
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-right: auto;
+  }
+
+  .save-status.show {
+    opacity: 1;
+  }
+
+  .empty-gallery {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-secondary);
+  }
+
+  .empty-gallery p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      grid-template-columns: 1fr;
+      height: auto;
+      max-height: 95vh;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts-container" id="hearts-container"></div>
+<div class="stars" id="stars"></div>
+
+<div class="container">
+  <div class="header">
+    <h1 class="header-title">Our Memories Gallery</h1>
+    <p class="header-sub">Upload photos and write your stories. Each memory deserves to be remembered. 📸💕</p>
+  </div>
+
+  <!-- UPLOAD SECTION -->
+  <div class="upload-section" onclick="document.getElementById('photoInput').click()">
+    <div class="upload-icon">📷</div>
+    <div class="upload-text">
+      <h3>Add Photos to Your Gallery</h3>
+      <p>Click to upload a photo or drag and drop</p>
+    </div>
+    <button class="btn-upload">Choose Photo</button>
+    <input type="file" id="photoInput" accept="image/*" multiple>
+  </div>
+
+  <!-- GALLERY GRID -->
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Photos will be added here -->
+  </div>
+
+  <div id="emptyGallery" class="empty-gallery">
+    <p>No photos yet. Upload your first memory! 📸</p>
+  </div>
+
+  <div class="footer">Made with love · Store your beautiful memories here</div>
+</div>
+
+
+<div class="modal" id="photoModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    
+    <div class="modal-image">
+      <img id="modalImage" src="" alt="Memory">
+    </div>
+
+    <div class="modal-letter">
+      <div>
+        <h3 class="modal-header">Your Story</h3>
+        <p class="modal-subtitle">Write the story behind this memory...</p>
+      </div>
+      <textarea class="letter-textarea" id="storyInput" placeholder="Write your story here. What was happening in this moment? How did you feel? What makes this memory special?"></textarea>
+      
+      <div class="modal-buttons">
+        <span class="save-status" id="saveStatus">✓ Saved</span>
+        <button class="btn-delete" onclick="deletePhoto()">Delete</button>
+        <button class="btn-close" onclick="closeModal()">Close</button>
+        <button class="btn-save" onclick="saveStory()">Save Story</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+let photos = [];
+let currentPhotoIndex = -1;
+
+
+const heartsContainer = document.getElementById('hearts-container');
+function createHearts() {
+  for(let i = 0; i < 25; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '♡';
+    const duration = Math.random() * 4 + 5;
+    const delay = Math.random() * 5;
+    const left = Math.random() * 100;
+    heart.style.cssText = `left:${left}%;--duration:${duration}s;--delay:${delay}s;`;
+    heartsContainer.appendChild(heart);
+  }
+  setTimeout(createHearts, 8000);
+}
+createHearts();
+
+const starsEl = document.getElementById('stars');
+for(let i = 0; i < 100; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2 + 0.5;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+3).toFixed(1)}s;--delay:${(Math.random()*5).toFixed(1)}s;--op:${(Math.random()*0.3+0.1).toFixed(2)};`;
+  starsEl.appendChild(s);
+}
+
+
+document.getElementById('photoInput').addEventListener('change', function(e) {
+  const files = Array.from(e.target.files);
+  
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const photoId = Date.now() + Math.random();
+      const photo = {
+        id: photoId,
+        image: event.target.result,
+        story: localStorage.getItem(`photo_story_${photoId}`) || ''
+      };
+      
+      photos.push(photo);
+      renderGallery();
+      localStorage.setItem('photos', JSON.stringify(photos.map(p => ({ id: p.id, story: p.story }))));
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  
+  e.target.value = '';
+});
+
+
+const uploadSection = document.querySelector('.upload-section');
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  uploadSection.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+  uploadSection.addEventListener(eventName, highlight, false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+  uploadSection.addEventListener(eventName, unhighlight, false);
+});
+
+function highlight(e) {
+  uploadSection.style.background = 'rgba(217,168,200,0.15)';
+}
+
+function unhighlight(e) {
+  uploadSection.style.background = 'rgba(217,168,200,0.03)';
+}
+
+uploadSection.addEventListener('drop', handleDrop, false);
+
+function handleDrop(e) {
+  const dt = e.dataTransfer;
+  const files = dt.files;
+  document.getElementById('photoInput').files = files;
+  
+  const event = new Event('change', { bubbles: true });
+  document.getElementById('photoInput').dispatchEvent(event);
+}
+
+function renderGallery() {
+  const gallery = document.getElementById('galleryGrid');
+  const empty = document.getElementById('emptyGallery');
+  
+  gallery.innerHTML = '';
+  
+  if (photos.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  
+  empty.style.display = 'none';
+  
+  photos.forEach((photo, index) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.onclick = () => openModal(index);
+    card.innerHTML = `<img src="${photo.image}" alt="Memory ${index + 1}">`;
+    gallery.appendChild(card);
+  });
+}
+
+
+function openModal(index) {
+  currentPhotoIndex = index;
+  const photo = photos[index];
+  
+  document.getElementById('modalImage').src = photo.image;
+  document.getElementById('storyInput').value = photo.story;
+  document.getElementById('photoModal').classList.add('active');
+  
+  
+  document.getElementById('saveStatus').classList.remove('show');
+}
+
+function closeModal() {
+  document.getElementById('photoModal').classList.remove('active');
+  currentPhotoIndex = -1;
+}
+
+function saveStory() {
+  if (currentPhotoIndex === -1) return;
+  
+  const story = document.getElementById('storyInput').value;
+  photos[currentPhotoIndex].story = story;
+  
+  
+  const photoId = photos[currentPhotoIndex].id;
+  localStorage.setItem(`photo_story_${photoId}`, story);
+  localStorage.setItem('photos', JSON.stringify(photos.map(p => ({ id: p.id, story: p.story }))));
+  
+  
+  const saveStatus = document.getElementById('saveStatus');
+  saveStatus.classList.add('show');
+  setTimeout(() => saveStatus.classList.remove('show'), 2000);
+}
+
+function deletePhoto() {
+  if (currentPhotoIndex === -1) return;
+  
+  if (confirm('Are you sure you want to delete this photo?')) {
+    const photo = photos[currentPhotoIndex];
+    localStorage.removeItem(`photo_story_${photo.id}`);
+    photos.splice(currentPhotoIndex, 1);
+    localStorage.setItem('photos', JSON.stringify(photos.map(p => ({ id: p.id, story: p.story }))));
+    
+    closeModal();
+    renderGallery();
+  }
+}
+
+
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('photoModal');
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+
+function loadPhotos() {
+  const saved = localStorage.getItem('photos');
+  if (saved) {
+    try {
+      const metadata = JSON.parse(saved);
+      
+    } catch (e) {
+      console.error('Error loading photos:', e);
+    }
+  }
+}
+
+
+renderGallery();
+</script>
+
+</body>
+</html>
