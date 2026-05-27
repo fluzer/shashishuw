@@ -414,7 +414,7 @@
     <p class="header-sub">Upload photos and write your stories. Each memory deserves to be remembered. 📸💕</p>
   </div>
 
-  <!-- UPLOAD SECTION -->
+  <!-- UPLOAD SECTION
   <div class="upload-section" onclick="document.getElementById('photoInput').click()">
     <div class="upload-icon">📷</div>
     <div class="upload-text">
@@ -423,15 +423,17 @@
     </div>
     <button class="btn-upload">Choose Photo</button>
     <input type="file" id="photoInput" accept="image/*" multiple>
-  </div>
+  </div> -->
 
   <!-- GALLERY GRID -->
   <div class="gallery-grid" id="galleryGrid">
-    <!-- Photos will be added here -->
+    <div class="photo-card"> 
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" alt="Memory 1">
+    </div>
   </div>
 
   <div id="emptyGallery" class="empty-gallery">
-    <p>No photos yet. Upload your first memory! 📸</p>
+    <p>No photos available right now.</p>
   </div>
 
   <div class="footer">Made with love · Store your beautiful memories here</div>
@@ -455,9 +457,9 @@
       
       <div class="modal-buttons">
         <span class="save-status" id="saveStatus">✓ Saved</span>
-        <button class="btn-delete" onclick="deletePhoto()">Delete</button>
+        <!-- <button class="btn-delete" onclick="deletePhoto()">Delete</button>
         <button class="btn-close" onclick="closeModal()">Close</button>
-        <button class="btn-save" onclick="saveStory()">Save Story</button>
+        <button class="btn-save" onclick="saveStory()">Save Story</button> -->
       </div>
     </div>
   </div>
@@ -465,7 +467,33 @@
 
 <script>
 
-let photos = [];
+let photos = [
+  {
+    id: 1,
+    image: 'photo/676f83db86f74031035d1f92415b6c52.jpg',
+    story: 'Sunset walk together and long talks that felt like home.'
+  },
+  {
+    id: 2,
+    image: 'photo/676f83db86f74031035d1f92415b6c52.jpg',
+    story: 'A calm morning, coffee, and laughter at the same table.'
+  },
+  {
+    id: 3,
+    image: 'photo/676f83db86f74031035d1f92415b6c52.jpg',
+    story: 'The photo that always reminds us to stay soft with each other.'
+  },
+  {
+    id: 4,
+    image: 'photo/676f83db86f74031035d1f92415b6c52.jpg',
+    story: 'Sunset walk together and long talks that felt like home.'
+  },
+  {
+    id: 5,
+    image: 'photo/676f83db86f74031035d1f92415b6c52.jpg',
+    story: 'Sunset walk together and long talks that felt like home.'
+  },
+];
 let currentPhotoIndex = -1;
 
 
@@ -495,48 +523,57 @@ for(let i = 0; i < 100; i++) {
 }
 
 
-document.getElementById('photoInput').addEventListener('change', function(e) {
-  const files = Array.from(e.target.files);
-  
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const photoId = Date.now() + Math.random();
-      const photo = {
-        id: photoId,
-        image: event.target.result,
-        story: localStorage.getItem(`photo_story_${photoId}`) || ''
+const photoInput = document.getElementById('photoInput');
+if (photoInput) {
+  photoInput.addEventListener('change', function(e) {
+    const files = Array.from(e.target.files);
+    
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const photoId = Date.now() + Math.random();
+        const photo = {
+          id: photoId,
+          image: event.target.result,
+          story: localStorage.getItem(`photo_story_${photoId}`) || ''
+        };
+        
+        photos.push(photo);
+        renderGallery();
+        localStorage.setItem('photos', JSON.stringify(photos.map(p => ({ id: p.id, story: p.story }))));
       };
-      
-      photos.push(photo);
-      renderGallery();
-      localStorage.setItem('photos', JSON.stringify(photos.map(p => ({ id: p.id, story: p.story }))));
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    });
+    
+    
+    e.target.value = '';
   });
-  
-  
-  e.target.value = '';
-});
+}
 
 
 const uploadSection = document.querySelector('.upload-section');
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-  uploadSection.addEventListener(eventName, preventDefaults, false);
-});
+if (uploadSection) {
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    uploadSection.addEventListener(eventName, preventDefaults, false);
+  });
+}
 
 function preventDefaults(e) {
   e.preventDefault();
   e.stopPropagation();
 }
 
-['dragenter', 'dragover'].forEach(eventName => {
-  uploadSection.addEventListener(eventName, highlight, false);
-});
+if (uploadSection) {
+  ['dragenter', 'dragover'].forEach(eventName => {
+    uploadSection.addEventListener(eventName, highlight, false);
+  });
+}
 
-['dragleave', 'drop'].forEach(eventName => {
-  uploadSection.addEventListener(eventName, unhighlight, false);
-});
+if (uploadSection) {
+  ['dragleave', 'drop'].forEach(eventName => {
+    uploadSection.addEventListener(eventName, unhighlight, false);
+  });
+}
 
 function highlight(e) {
   uploadSection.style.background = 'rgba(217,168,200,0.15)';
@@ -546,15 +583,18 @@ function unhighlight(e) {
   uploadSection.style.background = 'rgba(217,168,200,0.03)';
 }
 
-uploadSection.addEventListener('drop', handleDrop, false);
+if (uploadSection) {
+  uploadSection.addEventListener('drop', handleDrop, false);
+}
 
 function handleDrop(e) {
   const dt = e.dataTransfer;
   const files = dt.files;
-  document.getElementById('photoInput').files = files;
+  if (!photoInput) return;
+  photoInput.files = files;
   
   const event = new Event('change', { bubbles: true });
-  document.getElementById('photoInput').dispatchEvent(event);
+  photoInput.dispatchEvent(event);
 }
 
 function renderGallery() {
@@ -574,7 +614,7 @@ function renderGallery() {
     const card = document.createElement('div');
     card.className = 'photo-card';
     card.onclick = () => openModal(index);
-    card.innerHTML = `<img src="${photo.image}" alt="Memory ${index + 1}">`;
+    card.innerHTML = `<img src="${photo.image}">`;
     gallery.appendChild(card);
   });
 }
