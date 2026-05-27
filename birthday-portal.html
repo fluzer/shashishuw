@@ -1036,7 +1036,32 @@ const timeline = [
   { date: "Tomorrow", event: "Keeping the Love Alive and Strong Every Single Day" },
 ];
 
-const PHOTO_SLOTS = 6;
+let photos = [
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.58.jpeg',
+    alt: 'Our memory 1'
+  },
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.57.jpeg',
+    alt: 'Our memory 2'
+  },
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.57 (1).jpeg',
+    alt: 'Our memory 3'
+  },
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.56.jpeg',
+    alt: 'Our memory 4'
+  },
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.56 (2).jpeg',
+    alt: 'Our memory 5'
+  },
+  {
+    image: 'photo/photo/WhatsApp Image 2026-05-27 at 20.22.56 (1).jpeg',
+    alt: 'Our memory 6'
+  }
+];
 
 function buildContent() {
   const grid = document.getElementById('reasons-grid');
@@ -1058,20 +1083,12 @@ function buildContent() {
   });
 
   const photoGrid = document.getElementById('photo-grid');
-  for(let i = 0; i < PHOTO_SLOTS; i++) {
+  photos.forEach(photo => {
     const slot = document.createElement('div');
     slot.className = 'photo-slot';
-    slot.innerHTML = `<span class="add-icon">+</span><span>Add Photo</span><input type="file" class="photo-input" accept="image/*">`;
-    const input = slot.querySelector('.photo-input');
-    slot.addEventListener('click', () => input.click());
-    input.addEventListener('change', () => {
-      if(input.files[0]) {
-        const url = URL.createObjectURL(input.files[0]);
-        slot.innerHTML = `<img src="${url}" alt="">`;
-      }
-    });
+    slot.innerHTML = `<img src="${photo.image}" alt="${photo.alt}">`;
     photoGrid.appendChild(slot);
-  }
+  });
 }
 
 // GAMES
